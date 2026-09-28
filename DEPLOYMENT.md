@@ -8,32 +8,32 @@
 
 ## Thông Tin Học Viên
 
-| Mục | Nội dung |
-|-----|----------|
-| Họ và tên | (điền họ tên) |
-| Mã học viên | (điền mã học viên) |
-| Repo | (điền link repo K4-L3A-DAY12-HoVaTen-MSSV-CloudServicesAndDeployment) |
+| Mục         | Nội dung                                                                                   |
+| ----------- | ------------------------------------------------------------------------------------------ |
+| Họ và tên   | Nguyễn Việt Dũng                                                                           |
+| Mã học viên | 2A202602533                                                                                |
+| Repo        | https://github.com/DungBallad/K4-L3A-NguyenVietDung-2A202602533-CloudServicesAndDeployment |
 
 ## Service
 
-| Mục | Nội dung |
-|-----|----------|
-| Public URL | https://TODO-thay-bang-url-that.up.railway.app |
-| Platform | Railway / Render / Cloud Run — (điền platform bạn dùng) |
-| Ngày deploy | (điền ngày) |
+| Mục         | Nội dung                                                |
+| ----------- | ------------------------------------------------------- |
+| Public URL  | https://day12-agent-b9uz.onrender.com                   |
+| Platform    | Render (Blueprint từ `render.yaml`, runtime Docker, plan Free) |
+| Ngày deploy | 28/09/2026                                              |
 
 ## Biến Môi Trường Đã Set Trên Cloud
 
 Ghi tên biến và **nguồn giá trị**, không ghi giá trị:
 
-| Biến | Đã set | Ghi chú |
-|------|--------|---------|
-| `PORT` | ✅ | platform tự gán |
-| `AGENT_API_KEY` | ✅ | đặt trong dashboard, không nằm trong repo |
-| `REDIS_URL` | ✅ | (điền: Redis add-on của platform / Upstash / ...) |
-| `RATE_LIMIT_PER_MINUTE` | ✅ | 10 |
-| `MONTHLY_BUDGET_USD` | ✅ | 10.0 |
-| `LOG_LEVEL` | ✅ | INFO |
+| Biến                    | Đã set | Ghi chú                                           |
+| ----------------------- | ------ | ------------------------------------------------- |
+| `PORT`                  | ✅     | platform tự gán                                   |
+| `AGENT_API_KEY`         | ✅     | nhập lúc tạo Blueprint (`sync: false`), không nằm trong repo |
+| `REDIS_URL`             | ✅     | Render Key Value `day12-redis`, nối qua `fromService` (chỉ kết nối nội bộ) |
+| `RATE_LIMIT_PER_MINUTE` | ✅     | 10                                                |
+| `MONTHLY_BUDGET_USD`    | ✅     | 10.0                                              |
+| `LOG_LEVEL`             | ✅     | INFO                                              |
 
 ## Lệnh Kiểm Tra
 
@@ -73,7 +73,14 @@ done; echo
 Dán output của các lệnh trên vào đây:
 
 ```
-(điền output)
+$ curl https://day12-agent-b9uz.onrender.com/health
+{"status":"ok","service":"day12-agent","version":"1.0.0"}   [HTTP 200]
+
+$ curl https://day12-agent-b9uz.onrender.com/ready
+{"status":"ready","redis":true}   [HTTP 200]
+
+$ curl -X POST https://day12-agent-b9uz.onrender.com/ask -H "Content-Type: application/json" -d '{"question":"Hello"}'
+{"detail":"invalid or missing API key"}   [HTTP 401]
 ```
 
 ## Ảnh Chụp Màn Hình
@@ -96,6 +103,4 @@ Không đăng ký được tài khoản cloud? Vẫn nộp được bài, nhưng
    `http://localhost:8000`
 5. Ghi rõ lý do không deploy được vào phần dưới đây:
 
-```
-(điền lý do nếu dùng phương án dự phòng, ngược lại xóa mục này)
-```
+Không dùng phương án dự phòng — đã deploy thành công lên Render.
